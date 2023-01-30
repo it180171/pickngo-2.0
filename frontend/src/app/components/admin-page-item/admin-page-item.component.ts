@@ -3,6 +3,7 @@ import { Order } from 'src/app/models/Order';
 import { ProductService } from "../../services/product.service";
 import { OrderDataService } from "../../services/order-data.service";
 import { AdminPageService } from 'src/app/services/admin-page.service';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-admin-page-item',
@@ -12,6 +13,9 @@ import { AdminPageService } from 'src/app/services/admin-page.service';
 export class AdminPageItemComponent implements OnInit {
   @Input() order: Order;
   @Input() buttonText: string;
+
+  public apiUrl: String = environment.apiUrl;
+
   sum: number = 0;
   orderStats = {
     OPEN: 'Offen',

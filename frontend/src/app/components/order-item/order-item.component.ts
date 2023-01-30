@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { OrderItem } from 'src/app/models/OrderItem';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-order-item',
@@ -8,6 +9,8 @@ import { OrderItem } from 'src/app/models/OrderItem';
 })
 export class OrderItemComponent implements OnInit {
   @Input() orderItem: OrderItem;
+
+  public apiUrl: String = environment.apiUrl;
 
   
   constructor() { }

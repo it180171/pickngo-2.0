@@ -1,0 +1,68 @@
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  name: postgres-config
+#  labels:
+#    app: postgres
+#data:
+#  POSTGRES_DB: db
+#  POSTGRES_USER: app
+#  POSTGRES_PASSWORD: app
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      volumes:
+        - name: postgres-pv-storage
+          persistentVolumeClaim:
+            claimName: database-volume-claim
+      containers:
+        - name: postgres
+          image: postgres:11
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: app
+            - name: POSTGRES_USER
+              value: app
+            - name: POSTGRES_PASSWORD
+              value: app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database-svc
+  namespace: student-d-altenhofer
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+      name: postgres
+  selector:
+    app: postgres
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: database-volume-claim
+  namespace: student-d-altenhofer
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: standard
+  resources:
+    requests:
+      storage: 10Mi

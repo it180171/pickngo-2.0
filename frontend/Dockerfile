@@ -1,8 +1,11 @@
-FROM node:lts-alpine
-RUN mkdir /frontend
-WORKDIR /frontend
+#stage 1
+FROM node:latest as node
+WORKDIR /app
 COPY . .
 RUN npm install
-EXPOSE 4200
-CMD ["npm", "run", "build", "--", "--base-href=/d.altenhofer/", "--deploy-url=/d.altenhofer/"]
-CMD ["npx", "serve", "./dist/pickngo-angular", "-p", "4200"]
+RUN npm run build -- --base-href=/d.altenhofer/ --deploy-url=/d.altenhofer/
+
+#stage 2
+FROM nginx:alpine
+COPY default.conf /etc/nginx/conf.d/default.conf
+COPY --from=node /app/dist/pickngo-angular /usr/share/nginx/html
