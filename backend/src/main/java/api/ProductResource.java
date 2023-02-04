@@ -9,6 +9,7 @@ import workload.FoodItemRepo;
 import workload.KlimaboxService;
 import workload.ProductService;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -104,6 +105,7 @@ public class ProductResource {
     }
 
     @POST
+    //@RolesAllowed("admin")
     @Path("foodItem")
     public Response persistFoodItem(FoodItem foodItem) {
         foodItemRepo.persistET(foodItem);

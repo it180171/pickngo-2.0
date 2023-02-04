@@ -19,7 +19,7 @@ export class AdminPageItemComponent implements OnInit {
   sum: number = 0;
   orderStats = {
     OPEN: 'Offen',
-    IN_PRODUCTION: 'In Proktion',
+    IN_PRODUCTION: 'In Produktion',
     READY: 'Bereit',
     SPAM: 'Spam',
     CLOSED: 'Geschlossen'

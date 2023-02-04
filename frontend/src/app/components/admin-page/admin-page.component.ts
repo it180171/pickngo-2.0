@@ -12,7 +12,7 @@ export class AdminPageComponent implements OnInit {
   orders: Order[];
   orderStats = {
     OPEN: 'Offen',
-    IN_PRODUCTION: 'In Proktion',
+    IN_PRODUCTION: 'In Produktion',
     READY: 'Bereit',
     SPAM: 'Spam',
     CLOSED: 'Geschlossen'
