@@ -175,6 +175,8 @@
     <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-core-spi:4.7.5.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.spec.javax.ws.rs:jboss-jaxrs-api_2.1_spec:2.0.1.Final" level="project" />
     <orderEntry type="library" name="Maven: io.quarkus:quarkus-apache-httpclient:2.7.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.quarkus:quarkus-container-image-jib:2.7.1.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.quarkus:quarkus-container-image:2.7.1.Final" level="project" />
     <orderEntry type="library" name="Maven: io.quarkus:quarkus-smallrye-jwt-build:2.7.1.Final" level="project" />
     <orderEntry type="library" name="Maven: io.smallrye:smallrye-jwt-build:3.3.3" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.microprofile.jwt:microprofile-jwt-auth-api:1.2" level="project" />
