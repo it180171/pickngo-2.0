@@ -24,8 +24,6 @@ public class CustomerResource {
     @Inject
     JwtService jwtService;
 
-    //String jwt = jwtService.generateJwt();
-
     @GET
     public Response getCustomers(){
         System.out.println(service.findAll());
@@ -44,9 +42,10 @@ public class CustomerResource {
     @RolesAllowed({"user"})
     @Path("signUp")
     public Response signUP(Customer customer) {
+        String jwt = jwtService.generateJwt();
         SignUPDTO signUPDTO = service.signUP(customer);
         return Response.ok(signUPDTO)
-                //.header(HttpHeaders.AUTHORIZATION, "Bearer " + jwt)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwt)
                 .build();
     }
 

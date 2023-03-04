@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {LogInDTO} from "../models/LogInDTO";
-import {BehaviorSubject, map, Observable} from "rxjs";
+import {BehaviorSubject, map, Observable, tap} from "rxjs";
 import {User} from "../models/User";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
@@ -28,7 +28,10 @@ export class AuthService {
   }
 
   login(username: any, password: any): Observable<any> {
-    return this.http.post(environment.apiUrl + `/person/signIn/${username}/${password}`, {username, password});
+    return this.http.post(environment.apiUrl + `/person/signIn/${username}/${password}`, {username, password})
+        .pipe(tap((res: any) => {
+          localStorage.setItem('user_auth', res.jwt);
+        }));
   }
 
   isLoggedIn(): boolean {
