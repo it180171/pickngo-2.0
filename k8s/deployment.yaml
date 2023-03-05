@@ -1,0 +1,187 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: student-d-altenhofer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: gcr.io/pickngo-dave/frontend
+          ports:
+            - containerPort: 4200
+          env:
+            - name: BASE_URL
+              value: '/d.altenhofer/'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-svc
+  namespace: student-d-altenhofer
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http
+  selector:
+    app: frontend
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  labels:
+    app: postgres
+data:
+  POSTGRES_DB: db
+  POSTGRES_USER: app
+  POSTGRES_PASSWORD: app
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend-ingress
+  namespace: student-d-altenhofer
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    - host: student.cloud.htl-leonding.ac.at
+      http:
+        paths:
+          - path: /d.altenhofer/(.*)$
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-svc
+                port:
+                  number: 80
+---
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  name: postgres-config
+#  labels:
+#    app: postgres
+#data:
+#  POSTGRES_DB: db
+#  POSTGRES_USER: app
+#  POSTGRES_PASSWORD: app
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      volumes:
+        - name: postgres-pv-storage
+          persistentVolumeClaim:
+            claimName: database-volume-claim
+      containers:
+        - name: postgres
+          image: postgres:11
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: app
+            - name: POSTGRES_USER
+              value: app
+            - name: POSTGRES_PASSWORD
+              value: app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database-svc
+  namespace: student-d-altenhofer
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+      name: postgres
+  selector:
+    app: postgres
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: database-volume-claim
+  namespace: student-d-altenhofer
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: standard
+  resources:
+    requests:
+      storage: 10Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: student-d-altenhofer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: gcr.io/pickngo-dave/backend
+          ports:
+            - containerPort: 8080
+          env:
+            - name: APP_HOST
+              value: "0.0.0.0"
+            - name: APP_BASE_HREF
+              value: "/api/"
+            - name: APP_FORWARDED
+              value: "true"
+            - name: DB_HOST
+              value: "database-svc.student-d-altenhofer"
+            - name: DB_USER
+              value: "app"
+            - name: DB_PASS
+              value: "app"
+            - name: DB_NAME
+              value: "app"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-svc
+  namespace: student-d-altenhofer
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    app: backend
