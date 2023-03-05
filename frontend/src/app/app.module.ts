@@ -31,7 +31,7 @@ import { GreenBoxComponent } from './components/green-box/green-box.component';
 import { MatBadgeModule } from "@angular/material/badge";
 import { KlimaBoxPageComponent } from './components/klima-box-page/klima-box-page.component';
 import { KlimaBoxCategoryComponent } from './components/klima-box-category/klima-box-category.component';
-import { AuthInterceptor } from "./auth/auth.interceptor";
+import {AuthInterceptor, AuthInterceptorProvider} from "./auth/auth.interceptor";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatIconModule } from "@angular/material/icon";
 import { APP_BASE_HREF, DatePipe, PlatformLocation } from '@angular/common';
@@ -84,10 +84,7 @@ import { UserOrderViewItemComponent } from './components/user-order-view-item/us
   ],
   providers: [
     DatePipe,
-    {
-      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,
-      multi: true
-    },
+    AuthInterceptorProvider,
     {
       provide: APP_BASE_HREF,
       useValue: '/d.altenhofer/'

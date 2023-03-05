@@ -2,6 +2,7 @@ package api;
 
 import jwt.JwtService;
 import models.Customer;
+import org.json.JSONObject;
 import workload.DTOs.SignUPDTO;
 import workload.PersonService;
 
@@ -25,9 +26,13 @@ public class PersonResource {
     @Path("signIn/{username}/{password}")
     public Response signIn(@PathParam("username") String username, @PathParam("password") String password) {
         String jwt = jwtService.generateJwt();
-        SignUPDTO signInDTO = service.signIn(username, password);
-        return Response.ok(jwt)
+        SignUPDTO signInDTO = service.signInWithusernaem(username, password);
+        if(!signInDTO.isSuccess()) {
+            return Response.status(404).build();
+        }
+        return Response.ok(signInDTO)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwt)
+                .header("Access-Control-Expose-Headers", "Authorization")
                 .build();
     }
 

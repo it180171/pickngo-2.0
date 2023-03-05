@@ -56,15 +56,14 @@ export class LoginComponent implements OnInit {
         } else {
             this.authService.login(this.f['username'].value, this.f['password'].value)
                 .subscribe(u => {
-                    if (u.success) {
+                    if (u.status === 200) {
                         this.login.success = true;
-                        localStorage.setItem('id_token', u.token);
-                        localStorage.setItem('expires_at', u.expires_at);
                         console.log(u)
                         this.router.navigate(['/']);
                         this.loggedIn = true;
                         console.log('Success');
                     } else {
+                        console.log(u);
                         this.login.success = false;
                         this.loggedIn = false;
                         console.log('Error');
