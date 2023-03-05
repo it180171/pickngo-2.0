@@ -55,6 +55,12 @@ h4 {
   line-height: 1;
 }
 
+h5 {
+  font-size: 1.7rem;
+  text-align: center;
+  font-weight: bold;
+}
+
 /*--------------------------------------------------------------
 # Telefonnummer form
 --------------------------------------------------------------*/
@@ -98,6 +104,8 @@ input:focus {
 }
 
 .floating-label {
+  display: grid;
+  place-items: center;
   position: relative;
   margin-bottom: 10px;
   width: 100%;
@@ -634,6 +642,7 @@ section {
 .title h4 {
   display: block;
   font-size: 20px;
+  line-height: 40px;
 }
 
 /*--------------------------------------------------------------
@@ -677,7 +686,6 @@ section {
 
 .icon-boxes .title {
   font-weight: 700;
-  margin-bottom: 15px;
   font-size: 1.5vw;
 }
 

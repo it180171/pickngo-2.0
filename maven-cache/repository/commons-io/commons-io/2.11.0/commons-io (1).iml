@@ -6,6 +6,12 @@
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
+<<<<<<< HEAD
+=======
+    <content url="file://$MAVEN_REPOSITORY$/org/apache/commons/commons-parent/52">
+      <sourceFolder url="file://$MAVEN_REPOSITORY$/org/apache/commons/commons-parent/52" type="java-resource" />
+    </content>
+>>>>>>> dev
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>

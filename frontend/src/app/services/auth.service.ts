@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {LogInDTO} from "../models/LogInDTO";
-import {BehaviorSubject, map, Observable} from "rxjs";
+import {BehaviorSubject, map, Observable, of, tap} from "rxjs";
 import {User} from "../models/User";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpResponse, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {environment} from "../../environments/environment";
 
@@ -14,12 +14,17 @@ export class AuthService {
   private userSubject: BehaviorSubject<User | null>;
   public user: Observable<User | null>;
   public success: boolean = false;
+  userWithToken!: User;
+
+  get token() {
+    return localStorage.getItem('user_auth');
+  }
 
   constructor(private http: HttpClient, private router: Router) {
     console.log(this.userSubject);
-    if(localStorage.getItem('user') !== undefined && localStorage.getItem('user') !== null) {
+    if(localStorage.getItem('user_auth') !== undefined && localStorage.getItem('user_auth') !== null) {
       console.log("hi");
-      this.userSubject = new BehaviorSubject<User | null>(JSON.parse(localStorage.getItem('user') || '{}'));
+      this.userSubject = new BehaviorSubject<User | null>(JSON.parse(localStorage.getItem('user_auth') || '{}'));
       console.log(this.userSubject);
       this.user = this.userSubject.asObservable();
       // this.checkUser();
@@ -28,19 +33,31 @@ export class AuthService {
   }
 
   login(username: any, password: any): Observable<any> {
-    return this.http.post(environment.apiUrl + `/person/signIn/${username}/${password}`, {username, password});
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post(environment.apiUrl + `/person/signIn/${username}/${password}`, {username, password}, { headers, observe: 'response' })
+        .pipe(tap((res: HttpResponse<any>) => {
+          //const token = this.extractToken(res);
+          const token = res.headers.get('Authorization');
+          console.log('Authorization token:', token);
+          if (token != null || token != undefined) {
+            const tokenExpDate = new Date().getTime() + 3600 * 1000; // Set expiration date to 1 hour from now
+            const tokenData = { token, expiresAt: tokenExpDate };
+            localStorage.setItem('user_auth', JSON.stringify(tokenData));
+            this.userWithToken = this.getUser(token);
+          }
+        }));
   }
 
-  isLoggedIn(): boolean {
-    const n = new Date().getTime() / 1000;
-    const exp = Number(localStorage.getItem('expires_at'));
-    let loggedIn: boolean = false;
-    //return n < exp;
-    if(localStorage.getItem('id_token') !== undefined && localStorage.getItem('id_token') !== null) {
-      loggedIn = true;
-      console.log(localStorage.getItem('id_token'));
+  private getUser(token: string): User {
+    return JSON.parse(atob(token.split('.')[1])) as User;
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    if(localStorage.getItem('user_auth') !== undefined && localStorage.getItem('user_auth') !== null) {
+      return of(true);
+    } else {
+      return of(false);
     }
-    return loggedIn;
   }
 
   logout() {

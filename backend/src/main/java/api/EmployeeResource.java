@@ -5,6 +5,7 @@ import workload.DTOs.SignUPDTO;
 import workload.EmployeeRepository;
 import workload.EmployeeService;
 
+import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -26,6 +27,7 @@ public class EmployeeResource {
     }
 
     @GET
+    //@PermitAll
     @Path("{id}")
     public Response getEmployeeById (@PathParam("id") Long employeeId){
             return Response

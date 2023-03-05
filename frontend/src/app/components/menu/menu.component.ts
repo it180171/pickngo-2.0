@@ -3,6 +3,7 @@ import { faShoppingCart, faUser, faPiggyBank } from "@fortawesome/free-solid-svg
 import { Router } from '@angular/router';
 import { OrderDataService } from 'src/app/services/order-data.service';
 import { AuthService } from 'src/app/services/auth.service';
+import {of} from "rxjs";
 
 @Component({
   selector: 'app-menu',
@@ -21,18 +22,19 @@ export class MenuComponent implements OnInit {
 
   constructor(private router: Router, private orderData: OrderDataService, private authService: AuthService) {
     this.router.events.subscribe(e => {
+      this.authService.isLoggedIn().subscribe((isLoggedIn: boolean) => {
+        this.isLoggedIn = isLoggedIn;
+      });
       this.isOnLoginPage = !(this.router.url.includes('register') || this.router.url.includes('login'));
     })
   }
 
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isLoggedIn();
     console.log(this.isLoggedIn);
     this.orderData.currentOrder.subscribe(o => {
       this.shoppingCartItemCounter = o.orderItems.length;
     });
   }
-
 
 
   searchText: string = '';

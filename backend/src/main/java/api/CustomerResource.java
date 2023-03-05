@@ -1,11 +1,15 @@
 package api;
 
+import io.smallrye.jwt.auth.principal.JWTAuthContextInfo;
+import jwt.JwtService;
 import models.Customer;
 import workload.CustomerService;
 import workload.DTOs.SignUPDTO;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -15,6 +19,10 @@ import javax.ws.rs.core.Response;
 public class CustomerResource {
     @Inject
     private CustomerService service;
+    @Inject
+    JWTAuthContextInfo jwtAuthContextInfo;
+    @Inject
+    JwtService jwtService;
 
     @GET
     public Response getCustomers(){
@@ -29,11 +37,16 @@ public class CustomerResource {
         return (customer != null ? Response.ok(customer) : Response.status(404)).build();
     }
 
+    //ID beim request weglöschen, sonst detached entity
     @POST
+    @RolesAllowed({"user"})
     @Path("signUp")
     public Response signUP(Customer customer) {
+        String jwt = jwtService.generateJwt();
         SignUPDTO signUPDTO = service.signUP(customer);
-        return Response.ok(signUPDTO).build();
+        return Response.ok(signUPDTO)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwt)
+                .build();
     }
 
 }

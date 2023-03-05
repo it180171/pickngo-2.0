@@ -22,11 +22,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-      RouterModule.forRoot(routes, {
-        initialNavigation: 'enabledBlocking',
-        useHash: true,
-        preloadingStrategy: PreloadAllModules,
-      })
+      RouterModule.forRoot(routes)
   ],
   exports: [RouterModule]
 })

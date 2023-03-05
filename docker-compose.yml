@@ -13,9 +13,7 @@ services:
     ports:
       - "5432:5432"
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: ./Dockerfile.dev
+    image: pickngo/frontend-dev
     container_name: pickngo-frontend
     volumes:
       - ./frontend:/frontend
@@ -24,7 +22,7 @@ services:
     environment:
       CHOKIDAR_USEPOLLING: "true"
   backend:
-    build: ./backend
+    image: pickngo/backend-dev
     container_name: pickngo-backend
     depends_on:
       - postgres-dev
