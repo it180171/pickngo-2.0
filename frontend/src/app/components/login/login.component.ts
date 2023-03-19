@@ -5,6 +5,7 @@ import {ApiService} from "../../services/api.service";
 import {first} from "rxjs";
 import {LogInDTO} from "../../models/LogInDTO";
 import {AuthService} from "../../services/auth.service";
+import {Login} from "../../models/Login";
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   login: LogInDTO = new LogInDTO();
   loggedIn: boolean = false;
+  loginDTO: Login;
 
   constructor(private fb: UntypedFormBuilder,
               private route: ActivatedRoute,
@@ -42,6 +44,7 @@ export class LoginComponent implements OnInit {
     get f() { return this.form.controls; }
 
     onSubmit() {
+        this.loginDTO = new Login(this.f['username'].value, this.f['password'].value);
         this.submitted = true;
 
         // stop here if form is invalid
@@ -54,7 +57,7 @@ export class LoginComponent implements OnInit {
             console.log('Already logged in');
             this.router.navigate(['/']);
         } else {
-            this.authService.login(this.f['username'].value, this.f['password'].value)
+            this.authService.login(this.loginDTO)
                 .subscribe(u => {
                     if (u.status === 200) {
                         this.login.success = true;

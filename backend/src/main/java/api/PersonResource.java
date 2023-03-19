@@ -1,5 +1,6 @@
 package api;
 
+import DTO.LoginDTO;
 import jwt.JwtService;
 import models.Customer;
 import org.json.JSONObject;
@@ -18,15 +19,14 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class PersonResource {
     @Inject
-    private PersonService service;
+    PersonService service;
     @Inject
     JwtService jwtService;
 
     @POST
-    @Path("signIn/{username}/{password}")
-    public Response signIn(@PathParam("username") String username, @PathParam("password") String password) {
+    public Response signIn(LoginDTO loginDTO) {
         String jwt = jwtService.generateJwt();
-        SignUPDTO signInDTO = service.signInWithusernaem(username, password);
+        SignUPDTO signInDTO = service.signInWithusernaem(loginDTO.username, loginDTO.password);
         if(!signInDTO.isSuccess()) {
             return Response.status(404).build();
         }

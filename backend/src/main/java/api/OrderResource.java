@@ -24,9 +24,9 @@ import java.util.concurrent.atomic.AtomicReference;
 public class OrderResource {
 
     @Inject
-    private OrderService service;
+    OrderService service;
     @Inject
-    private ProductService productService;
+    ProductService productService;
     @Inject
     Mailer mailer;
 

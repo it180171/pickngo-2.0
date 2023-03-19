@@ -3,6 +3,7 @@ package api;
 import models.Menu;
 import workload.MenuService;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -13,7 +14,7 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class MenuResource {
     @Inject
-    private MenuService service;
+    MenuService service;
 
     @GET
     public Response getAll() {
@@ -33,17 +34,20 @@ public class MenuResource {
     }
 
     @POST
+    @RolesAllowed({"admin"})
     public Response add(Menu menu) {
         return Response.ok(service.add(menu)).build();
     }
 
     @PUT
+    @RolesAllowed({"admin"})
     public Response update(Menu menu) {
         return Response.ok(service.update(menu)).build();
     }
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed({"admin"})
     public Response delete(@PathParam("id") Long id) {
         return Response.ok(service.delete(id)).build();
     }
