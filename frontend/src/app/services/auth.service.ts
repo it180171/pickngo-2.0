@@ -44,6 +44,7 @@ export class AuthService {
             const tokenExpDate = new Date().getTime() + 3600 * 1000; // Set expiration date to 1 hour from now
             const tokenData = { token, expiresAt: tokenExpDate };
             localStorage.setItem('user_auth', JSON.stringify(tokenData));
+            localStorage.setItem('user_auth_timer_start', tokenData.expiresAt.toString());
             this.userWithToken = this.getUser(token);
           }
         }));
