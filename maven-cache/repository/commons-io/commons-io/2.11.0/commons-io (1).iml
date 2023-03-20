@@ -8,8 +8,8 @@
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MAVEN_REPOSITORY$/org/apache/commons/commons-parent/52">
       <sourceFolder url="file://$MAVEN_REPOSITORY$/org/apache/commons/commons-parent/52" type="java-resource" />
-      <excludeFolder url="file://$MAVEN_REPOSITORY$/org/apache/commons/commons-parent/52/target/classes" />
       <excludeFolder url="file://$MAVEN_REPOSITORY$/org/apache/commons/commons-parent/52/target/test-classes" />
+      <excludeFolder url="file://$MAVEN_REPOSITORY$/org/apache/commons/commons-parent/52/target/classes" />
     </content>
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/target" />

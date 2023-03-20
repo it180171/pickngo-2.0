@@ -5,9 +5,7 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
-        <datasource-mapping>
-          <factory-entry name="pickngo" />
-        </datasource-mapping>
+        <datasource-mapping />
         <naming-strategy-map />
       </configuration>
     </facet>
@@ -212,7 +210,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.codehaus.plexus:plexus-classworlds:2.6.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.codehaus.plexus:plexus-sec-dispatcher:2.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.codehaus.plexus:plexus-cipher:2.0" level="project" />
-    <orderEntry type="module" module-name="commons-cli (2)" scope="TEST" />
+    <orderEntry type="module" module-name="commons-cli" scope="TEST" />
     <orderEntry type="library" scope="TEST" name="Maven: org.eclipse.sisu:org.eclipse.sisu.plexus:0.3.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.apache.maven:maven-settings-builder:3.8.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.codehaus.plexus:plexus-interpolation:1.26" level="project" />
