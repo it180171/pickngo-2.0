@@ -1,0 +1,53 @@
+<mat-card>
+    <mat-card-header><h1>Timetable</h1></mat-card-header>
+    <mat-card-content>
+        <mat-form-field appearance="fill">
+            <mat-label>Klasse</mat-label>
+            <mat-select [(ngModel)]="selectedClass" (ngModelChange)="updateTimetable()">
+                <mat-option *ngFor="let classItem of classes" [value]="classItem.id">{{classItem.id}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="saveChanged()">Speichern</button>
+
+        <div class="timetable" *ngIf="units; else noClass">
+            <table>
+                <thead>
+                <tr>
+                    <td></td>
+                    <td *ngFor="let day of days">
+                        <div>{{day}}</div>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let unit of timeUnits; let i = index">
+                    <td>
+                        <div>{{i + 1}}</div>
+                    </td>
+                    <td *ngFor="let day of days; let j = index">
+                        <div *ngIf="getUnit(i + 1, j + 1) as unit" [ngClass]="{
+              'changed': unit.changed && unit.changed === 'self',
+              'remote-changes': unit.changed && unit.changed === 'remote'
+            }">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Gegenstand</mat-label>
+                                <input matInput [(ngModel)]="unit.subject" (ngModelChange)="updateUnit(unit)">
+                            </mat-form-field>
+                            <mat-form-field appearance="fill">
+                                <mat-label>Lehrer</mat-label>
+                                <mat-select [(ngModel)]="unit.teacherId" (ngModelChange)="updateUnit(unit)">
+                                    <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">{{teacher.lastName}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <ng-template #noClass>
+            <h2>Keine Klasse ausgewählt</h2>
+        </ng-template>
+    </mat-card-content>
+</mat-card>

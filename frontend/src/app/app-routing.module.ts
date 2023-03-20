@@ -8,6 +8,7 @@ import { OrderComponent } from "./components/order/order.component";
 import { RegisterComponent } from "./components/register/register.component";
 import { AuthGuardService } from "./auth/auth.guard";
 import { UserOrderViewComponent } from './components/user-order-view/user-order-view.component';
+import {TimetableComponent} from "./components/timetable/timetable.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'logout', component: LoginComponent },
   { path: 'adminPage', component: AdminPageComponent },
   { path: 'klimabox', component: GreenBoxComponent },
-  { path: 'myorders', component: UserOrderViewComponent}
+  { path: 'myorders', component: UserOrderViewComponent},
+  { path: 'timetable', component: TimetableComponent}
 ];
 
 @NgModule({
