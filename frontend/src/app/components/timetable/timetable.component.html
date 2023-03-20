@@ -1,16 +1,9 @@
 <mat-card>
-    <mat-card-header><h1>Timetable</h1></mat-card-header>
+    <mat-card-header><h1>Öffnungszeiten für den {{ '20.03 bis 27.03' }}
+    </h1></mat-card-header>
     <mat-card-content>
-        <mat-form-field appearance="fill">
-            <mat-label>Klasse</mat-label>
-            <mat-select [(ngModel)]="selectedClass" (ngModelChange)="updateTimetable()">
-                <mat-option *ngFor="let classItem of classes" [value]="classItem.id">{{classItem.id}}</mat-option>
-            </mat-select>
-        </mat-form-field>
 
-        <button mat-raised-button color="primary" (click)="saveChanged()">Speichern</button>
-
-        <div class="timetable" *ngIf="units; else noClass">
+        <div class="timetable">
             <table>
                 <thead>
                 <tr>
@@ -30,15 +23,10 @@
               'changed': unit.changed && unit.changed === 'self',
               'remote-changes': unit.changed && unit.changed === 'remote'
             }">
-                            <mat-form-field appearance="fill">
-                                <mat-label>Gegenstand</mat-label>
-                                <input matInput [(ngModel)]="unit.subject" (ngModelChange)="updateUnit(unit)">
-                            </mat-form-field>
-                            <mat-form-field appearance="fill">
-                                <mat-label>Lehrer</mat-label>
-                                <mat-select [(ngModel)]="unit.teacherId" (ngModelChange)="updateUnit(unit)">
-                                    <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">{{teacher.lastName}}</mat-option>
-                                </mat-select>
+                            <mat-form-field>
+                                <mat-card [ngClass]="'closed'" *ngIf="day === 'Mo' || day === 'Di'">Geschlossen</mat-card>
+                                <mat-card [ngClass]="'open'" *ngIf="day !== 'Mo' && day !== 'Di'">Geöffnet</mat-card>
+                                <input matInput>
                             </mat-form-field>
                         </div>
                     </td>
@@ -46,8 +34,5 @@
                 </tbody>
             </table>
         </div>
-        <ng-template #noClass>
-            <h2>Keine Klasse ausgewählt</h2>
-        </ng-template>
     </mat-card-content>
 </mat-card>

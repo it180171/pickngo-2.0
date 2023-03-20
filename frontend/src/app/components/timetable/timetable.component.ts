@@ -17,10 +17,10 @@ export class TimetableComponent implements OnInit {
 
   teachers: Teacher[] = [];
   classes: Class[] = [];
-  selectedClass?: string;
+  selectedClass?: 'string';
   units?: Unit[];
   days = ['Mo', 'Di', 'Mi', 'Do', 'Fr'];
-  timeUnits = new Array(10);
+  timeUnits = new Array(4);
   unitsToUpdate: Unit[] = [];
 
   constructor(private readonly http: HttpService, private readonly updateService: UpdateService) {
@@ -31,21 +31,12 @@ export class TimetableComponent implements OnInit {
     this.http.listClasses().subscribe(data => {
       this.classes = data
     });
-    this.updateService.startWebsocket().asObservable().subscribe((unit) => {
-      this.units = this.units?.map(u => {
-        if (u.classId == unit.classId && unit.unit == u.unit && unit.day == u.day) {
-          console.log('change')
-          unit.changed = 'remote';
-          return unit;
-        }
-        return u;
-      })
-    })
+    this.updateTimetable();
   }
 
   updateTimetable() {
     this.units = undefined;
-    this.http.getUnitsForClass(this.selectedClass ?? '').subscribe(data => {
+    this.http.getUnitsForClass('5BHITM').subscribe(data => {
       this.units = data;
       for (let day = 1; day <= this.days.length; day++) {
         for (let unit = 1; unit <= this.timeUnits.length; unit++) {

@@ -6,8 +6,19 @@ mat-card {
   max-height: 70vh;
   overflow-y: auto;
   padding: 1rem;
-  background: #222222;
   border-radius: 1rem;
+}
+
+.closed {
+  background-color: #820b0b;
+  color: white;
+  text-align: center;
+}
+
+.open {
+  background-color: #147214;
+  color: white;
+  text-align: center;
 }
 
 table {

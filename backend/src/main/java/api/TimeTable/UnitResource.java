@@ -30,8 +30,6 @@ public class UnitResource {
     TeacherService teacherService;
     @Inject
     SchoolClassService schoolClassService;
-    @Inject
-    UpdateSocket updateSocket;
 
     @GET
     @Path("/class/{id}")
@@ -49,7 +47,6 @@ public class UnitResource {
         }
 
         Unit u = unitService.postUnit(Unit.fromDTO(unitDTO), t, sc);
-        updateSocket.sendUpdate(u.toDTO());
         URI uri = uriInfo.getAbsolutePathBuilder().path(Long.toString(u.id)).build();
         return Response.created(uri).build();
     }

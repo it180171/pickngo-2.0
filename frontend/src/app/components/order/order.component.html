@@ -56,7 +56,7 @@
                                     <img src="assets/img/checkmark.webp" style="width:300px;height:auto;">
                                     <h4 class="title" style="text-align:center;font-size:30px;">Ihre Bestellung ist
                                         abholbereit um</h4>
-                                    <h4 class="title" style="text-align:center;font-size:50px;">{{ ("0" + (planedPickupTime.getHours())).slice(-2) + ":" + ("0" + (planedPickupTime.getMinutes())).slice(-2) }}</h4>
+                                    <h4 class="title" style="text-align:center;font-size:50px;">{{ ("0" + (planedPickupTime.getHours()+1)).slice(-2) + ":" + ("0" + (planedPickupTime.getMinutes())).slice(-2) }}</h4>
                                 </div>
                             </div>
                         </div>

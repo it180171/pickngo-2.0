@@ -5,7 +5,7 @@ import {Teacher} from "../models/teacher";
 import {Class} from "../models/class";
 import {Unit} from "../models/unit";
 
-const BASE_URL = 'http://localhost:8080/api'
+const BASE_URL = 'http://localhost:8080'
 
 @Injectable({
   providedIn: 'root'
