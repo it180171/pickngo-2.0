@@ -38,6 +38,10 @@ import { APP_BASE_HREF, DatePipe, PlatformLocation } from '@angular/common';
 import { UserOrderViewComponent } from './components/user-order-view/user-order-view.component';
 import { OrderItemComponent } from './components/order-item/order-item.component';
 import { UserOrderViewItemComponent } from './components/user-order-view-item/user-order-view-item.component';
+import { TimetableComponent } from './components/timetable/timetable.component';
+import {MatOptionModule} from "@angular/material/core";
+import {MatSelectModule} from "@angular/material/select";
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -63,25 +67,29 @@ import { UserOrderViewItemComponent } from './components/user-order-view-item/us
     UserOrderViewComponent,
     OrderItemComponent,
     UserOrderViewItemComponent,
+    TimetableComponent,
 
   ],
-  imports: [
-    BrowserModule,
-    NgImageSliderModule,
-    AppRoutingModule,
-    HttpClientModule,
-    MatInputModule,
-    FontAwesomeModule,
-    ReactiveFormsModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    MatCheckboxModule,
-    MatSlideToggleModule,
-    MatBadgeModule,
-    MatDatepickerModule,
-    MatIconModule,
-    MatMenuModule
-  ],
+    imports: [
+        BrowserModule,
+        NgImageSliderModule,
+        AppRoutingModule,
+        HttpClientModule,
+        MatInputModule,
+        FontAwesomeModule,
+        ReactiveFormsModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        MatCheckboxModule,
+        MatSlideToggleModule,
+        MatBadgeModule,
+        MatDatepickerModule,
+        MatIconModule,
+        MatMenuModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatCardModule
+    ],
   providers: [
     DatePipe,
     AuthInterceptorProvider,

@@ -22,8 +22,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="commons-io (1)" />
-    <orderEntry type="module" module-name="commons-logging" />
     <orderEntry type="library" name="Maven: io.quarkus:quarkus-qute:2.7.1.Final" level="project" />
     <orderEntry type="library" name="Maven: io.quarkus:quarkus-core:2.7.1.Final" level="project" />
     <orderEntry type="library" name="Maven: jakarta.enterprise:jakarta.enterprise.cdi-api:2.0.2" level="project" />
@@ -93,7 +91,7 @@
     <orderEntry type="library" name="Maven: org.glassfish:jakarta.json:1.1.6" level="project" />
     <orderEntry type="library" name="Maven: jakarta.json.bind:jakarta.json.bind-api:1.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-json-p-provider:4.7.5.Final" level="project" />
-    <orderEntry type="module" module-name="commons-io" />
+    <orderEntry type="module" module-name="commons-io (1)" />
     <orderEntry type="library" name="Maven: io.quarkus:quarkus-smallrye-openapi:2.7.1.Final" level="project" />
     <orderEntry type="library" name="Maven: io.smallrye:smallrye-open-api-core:2.1.17" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.microprofile.openapi:microprofile-openapi-api:2.0.1-RC1" level="project" />
@@ -280,5 +278,6 @@
     <orderEntry type="library" name="Maven: com.fasterxml.woodstox:woodstox-core:6.2.7" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.33" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20220320" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.websocket:jakarta.websocket-api:1.1.2" level="project" />
   </component>
 </module>
