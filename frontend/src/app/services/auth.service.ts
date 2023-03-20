@@ -5,6 +5,7 @@ import {User} from "../models/User";
 import {HttpClient, HttpResponse, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {environment} from "../../environments/environment";
+import {Login} from "../models/Login";
 
 @Injectable({
   providedIn: 'root'
@@ -32,9 +33,9 @@ export class AuthService {
     }
   }
 
-  login(username: any, password: any): Observable<any> {
+  login(login: Login): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.post(environment.apiUrl + `/person/signIn/${username}/${password}`, {username, password}, { headers, observe: 'response' })
+    return this.http.post(environment.apiUrl + `/person`, login, { headers, observe: 'response' })
         .pipe(tap((res: HttpResponse<any>) => {
           //const token = this.extractToken(res);
           const token = res.headers.get('Authorization');

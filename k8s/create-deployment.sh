@@ -2,7 +2,9 @@
 
 # create the deployment.yaml file from the parts
 
-EMAIL=$(echo $EMAIL_FROM_CMD_LINE | sed -e "s/@.*$//")
+OUTPUT=deployment.yaml
+DEFAULT_EMAIL=john.doe@example.com
+
 PARTS=$(find ./parts -type f -name "*.yaml" -print | sort)
 
 echo "prepare $OUTPUT"
@@ -15,6 +17,7 @@ do
     then
         echo "---" >> $OUTPUT
     fi
+    cat $file >> $OUTPUT
     let CNT+=1
 done
 

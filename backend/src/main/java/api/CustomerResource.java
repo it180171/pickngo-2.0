@@ -18,13 +18,14 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class CustomerResource {
     @Inject
-    private CustomerService service;
+    CustomerService service;
     @Inject
     JWTAuthContextInfo jwtAuthContextInfo;
     @Inject
     JwtService jwtService;
 
     @GET
+    @RolesAllowed({"admin"})
     public Response getCustomers(){
         System.out.println(service.findAll());
         return Response.ok(service.findAll()).build();
@@ -32,6 +33,7 @@ public class CustomerResource {
 
     @GET
     @Path("{id}")
+    @RolesAllowed({"admin"})
     public Response getCustomerById(@PathParam("id") Long id) {
         Customer customer = service.findById(id);
         return (customer != null ? Response.ok(customer) : Response.status(404)).build();
@@ -39,7 +41,6 @@ public class CustomerResource {
 
     //ID beim request weglöschen, sonst detached entity
     @POST
-    @RolesAllowed({"user"})
     @Path("signUp")
     public Response signUP(Customer customer) {
         String jwt = jwtService.generateJwt();
